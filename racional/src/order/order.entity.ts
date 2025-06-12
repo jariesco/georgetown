@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn } from 'typeorm';
-import { User } from '../user/user.entity';
+import { Portfolio } from '../portfolio/portfolio.entity';
 import { Stock } from '../stock/stock.entity';
 
 @Entity()
@@ -7,8 +7,8 @@ export class Order {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => User, (user) => user.orders)
-  user: User;
+  @ManyToOne(() => Portfolio, (portfolio) => portfolio.orders)
+  portfolio: Portfolio;
 
   @ManyToOne(() => Stock, (stock) => stock.orders)
   stock: Stock;

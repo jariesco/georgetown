@@ -8,7 +8,7 @@ export class CreateOrderDto {
   amount: number;
 
   @IsInt()
-  userId: number;
+  portfolioId: number;
 
   @IsInt()
   stockId: number;

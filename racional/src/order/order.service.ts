@@ -3,10 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './order.entity';
 import { Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
-import { User } from '../user/user.entity';
 import { Stock } from '../stock/stock.entity';
 import { StockPriceService } from '../stock/stock-price.service';
-import { PortfolioEntry } from '../portfolio/portfolio.entity';
+import { User } from '../user/user.entity';
+import { Portfolio } from '../portfolio/portfolio.entity';
+import { PortfolioEntry } from '../portfolio/portfolio.entry.entity';
 
 @Injectable()
 export class OrderService {
@@ -15,15 +16,20 @@ export class OrderService {
     private orderRepository: Repository<Order>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    @InjectRepository(Portfolio)
+    private portfolioRepository: Repository<Portfolio>,
+    @InjectRepository(PortfolioEntry)
+    private portfolioEntryRepository: Repository<PortfolioEntry>,
     @InjectRepository(Stock)
     private stockRepository: Repository<Stock>,
-    @InjectRepository(PortfolioEntry)
-    private portfolioRepository: Repository<PortfolioEntry>,
     private stockPriceService: StockPriceService
   ) {}
 
   async create(dto: CreateOrderDto): Promise<Order> {
-    const user = await this.userRepository.findOne({ where: { id: dto.userId } });
+    const portfolio = await this.portfolioRepository.findOne({ where: { id: dto.portfolioId } });
+    if (!portfolio) throw new NotFoundException('Portfolio not found');
+
+    const user = await this.userRepository.findOne({ where: { id: portfolio.user.id } });
     if (!user) throw new NotFoundException('User not found');
 
     const stock = await this.stockRepository.findOne({ where: { id: dto.stockId } });
@@ -43,28 +49,26 @@ export class OrderService {
       user.walletBalance -= dto.amount;
 
       // Update or create portfolio entry
-      let entry = await this.portfolioRepository.findOne({
-        where: { user: { id: user.id }, stock: { id: stock.id } },
+      let entry = await this.portfolioEntryRepository.findOne({
+        where: { portfolio: { id: portfolio.id }, stock: { id: stock.id } },
       });
 
       if (entry) {
-        entry.amountInvested = Number(entry.amountInvested) + Number(dto.amount);
         entry.quantity = Number(entry.quantity) + Number(addedQuantity);
       } else {
-        entry = this.portfolioRepository.create({
-          user,
+        entry = this.portfolioEntryRepository.create({
+          portfolio,
           stock,
-          amountInvested: dto.amount,
           quantity: addedQuantity,
         });
       }
 
-      await this.portfolioRepository.save(entry);
+      await this.portfolioEntryRepository.save(entry);
     }
 
     if (dto.type === 'SELL') {
-      const entry = await this.portfolioRepository.findOne({
-        where: { user: { id: user.id }, stock: { id: stock.id } },
+      const entry = await this.portfolioEntryRepository.findOne({
+        where: { portfolio: { id: portfolio.id }, stock: { id: stock.id } },
       });
 
       if (!entry || entry.quantity < addedQuantity) {
@@ -72,14 +76,13 @@ export class OrderService {
       }
 
       entry.quantity = Number(entry.quantity) - Number(addedQuantity);
-      entry.amountInvested = Number(entry.amountInvested) - Number(dto.amount);
       user.walletBalance += dto.amount;
 
-      await this.portfolioRepository.save(entry);
+      await this.portfolioEntryRepository.save(entry);
     }
 
     const order = this.orderRepository.create({
-      user,
+      portfolio,
       stock,
       type: dto.type,
       amount: dto.amount,

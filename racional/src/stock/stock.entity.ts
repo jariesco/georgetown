@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Order } from '../order/order.entity';
-import { PortfolioEntry } from '../portfolio/portfolio.entity';
+import { PortfolioEntry } from '../portfolio/portfolio.entry.entity';
 
 @Entity()
 export class Stock {

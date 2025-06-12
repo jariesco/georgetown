@@ -1,21 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
 import { User } from '../user/user.entity';
-import { Stock } from '../stock/stock.entity';
+import { Order } from '../order/order.entity';
+import { PortfolioEntry } from './portfolio.entry.entity';
 
 @Entity()
-export class PortfolioEntry {
+export class Portfolio {
   @PrimaryGeneratedColumn()
   id: number;
 
   @ManyToOne(() => User, (user) => user.portfolio)
   user: User;
 
-  @ManyToOne(() => Stock, (stock) => stock.portfolioEntries)
-  stock: Stock;
+  @OneToMany(() => PortfolioEntry, (entry) => entry.portfolio)
+  entry: PortfolioEntry;
 
-  @Column({ type: 'decimal' })
-  amountInvested: number;
+  @OneToMany(() => Order, (order) => order.portfolio)
+  orders: Order[];
 
-  @Column({ type: 'decimal' })
-  quantity: number;
 }

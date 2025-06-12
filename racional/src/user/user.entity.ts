@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Transaction } from '../transaction/transaction.entity';
 import { Order } from '../order/order.entity';
-import { PortfolioEntry } from '../portfolio/portfolio.entity';
+import { Portfolio } from '../portfolio/portfolio.entity';
 
 @Entity()
 export class User {
@@ -23,9 +23,6 @@ export class User {
   @OneToMany(() => Transaction, (tx) => tx.user)
   transactions: Transaction[];
 
-  @OneToMany(() => Order, (order) => order.user)
-  orders: Order[];
-
-  @OneToMany(() => PortfolioEntry, (entry) => entry.user)
-  portfolio: PortfolioEntry[];
+  @OneToMany(() => Portfolio, (portfolio) => portfolio.user)
+  portfolio: Portfolio[];
 }
