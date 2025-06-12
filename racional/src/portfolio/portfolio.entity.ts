@@ -8,6 +8,9 @@ export class Portfolio {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column()
+  name: string;
+
   @ManyToOne(() => User, (user) => user.portfolio)
   user: User;
 

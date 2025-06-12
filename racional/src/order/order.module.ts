@@ -6,11 +6,12 @@ import { OrderController } from './order.controller';
 import { User } from '../user/user.entity';
 import { Stock } from '../stock/stock.entity';
 import { StockModule } from '../stock/stock.module';
-import { PortfolioEntry } from '../portfolio/portfolio.entity';
+import { PortfolioEntry } from '../portfolio/portfolio.entry.entity';
+import { Portfolio } from '../portfolio/portfolio.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Order, User, Stock, PortfolioEntry]),
+    TypeOrmModule.forFeature([Order, User, Stock, PortfolioEntry, Portfolio]),
     StockModule,
   ],
   providers: [OrderService],

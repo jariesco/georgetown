@@ -36,6 +36,16 @@ Content-Type: application/json
   "amount": 1000
 }
 
+# CREAR PORTAFOLIO
+POST http://localhost:3000/portfolio
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "name": "Nuevo portfolio"
+}
+
+
 # COMPRAR
 POST http://localhost:3000/order
 Content-Type: application/json
