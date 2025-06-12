@@ -1,3 +1,5 @@
+
+# CREAR USUARIO
 POST http://localhost:3000/users
 Content-Type: application/json
 
@@ -8,10 +10,12 @@ Content-Type: application/json
 }
 
 
+# MOSTRAR USUARIOS
 GET http://localhost:3000/users
 Content-Type: application/json
 
 
+# DEPOSITAR
 POST http://localhost:3000/transactions
 Content-Type: application/json
 
@@ -22,6 +26,7 @@ Content-Type: application/json
 }
 
 
+# RETIRAR
 POST http://localhost:3000/transactions
 Content-Type: application/json
 
@@ -31,6 +36,7 @@ Content-Type: application/json
   "amount": 1000
 }
 
+# COMPRAR
 POST http://localhost:3000/order
 Content-Type: application/json
 
@@ -41,11 +47,31 @@ Content-Type: application/json
   "amount": 100
 }
 
+# VENDER
+POST http://localhost:3000/order
+Content-Type: application/json
 
+{
+  "userId": 2,
+  "stockId": 1,
+  "type": "SELL",
+  "amount": 100
+}
+
+# CREAR STOCK
 POST http://localhost:3000/stock
 Content-Type: application/json
 
 {
   "ticker": "TSLA",
   "name": "Tesla"
+}
+
+# EDITAR USUARIO
+PATCH http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+  "fullName": "Jorge Riesco P",
+  "email": "jorgeRiesco@example.com"
 }
