@@ -36,9 +36,9 @@ Content-Type: application/json
 
 {
   "userId": 2,
-  "stockId": 2,
+  "stockId": 1,
   "type": "BUY",
-  "amount": 800
+  "amount": 100
 }
 
 

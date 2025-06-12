@@ -32,7 +32,7 @@ export class OrderService {
     user.walletBalance = Number(user.walletBalance ?? 0);
 
     const price = this.stockPriceService.getPrice(stock.ticker);
-    const addedQuantity = dto.amount / price;
+    const addedQuantity = parseFloat((dto.amount / price).toFixed(3));
 
     // const addedQuantity = dto.amount / stock.value
 
@@ -48,8 +48,8 @@ export class OrderService {
       });
 
       if (entry) {
-        entry.amountInvested += dto.amount;
-        entry.quantity += addedQuantity;
+        entry.amountInvested = Number(entry.amountInvested) + Number(dto.amount);
+        entry.quantity = Number(entry.quantity) + Number(addedQuantity);
       } else {
         entry = this.portfolioRepository.create({
           user,
@@ -71,8 +71,8 @@ export class OrderService {
         throw new BadRequestException('Not enough stock quantity to sell');
       }
 
-      entry.quantity -= addedQuantity;
-      entry.amountInvested -= dto.amount;
+      entry.quantity = Number(entry.quantity) - Number(addedQuantity);
+      entry.amountInvested = Number(entry.amountInvested) - Number(dto.amount);
       user.walletBalance += dto.amount;
 
       await this.portfolioRepository.save(entry);
