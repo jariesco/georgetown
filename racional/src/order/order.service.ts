@@ -26,10 +26,12 @@ export class OrderService {
   ) {}
 
   async create(dto: CreateOrderDto): Promise<Order> {
-    const portfolio = await this.portfolioRepository.findOne({ where: { id: dto.portfolioId } });
+    const portfolio = await this.portfolioRepository.findOne({ where: { id: dto.portfolioId }, 
+      relations: ['user'],
+    });
     if (!portfolio) throw new NotFoundException('Portfolio not found');
 
-    const user = await this.userRepository.findOne({ where: { id: portfolio.user.id } });
+    const user = portfolio.user;
     if (!user) throw new NotFoundException('User not found');
 
     const stock = await this.stockRepository.findOne({ where: { id: dto.stockId } });
@@ -54,7 +56,7 @@ export class OrderService {
       });
 
       if (entry) {
-        entry.quantity = Number(entry.quantity) + Number(addedQuantity);
+        entry.quantity = parseFloat((Number(entry.quantity) + Number(addedQuantity)).toFixed(3));
       } else {
         entry = this.portfolioEntryRepository.create({
           portfolio,
@@ -75,7 +77,7 @@ export class OrderService {
         throw new BadRequestException('Not enough stock quantity to sell');
       }
 
-      entry.quantity = Number(entry.quantity) - Number(addedQuantity);
+      entry.quantity = parseFloat((Number(entry.quantity) - Number(addedQuantity)).toFixed(3));
       user.walletBalance += dto.amount;
 
       await this.portfolioEntryRepository.save(entry);

@@ -1,4 +1,4 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post, Body, Get, Patch } from '@nestjs/common';
 import { PortfolioService } from './portfolio.service';
 import { CreatePortfolioDto } from './dto/create-portfolio.dto';
 
