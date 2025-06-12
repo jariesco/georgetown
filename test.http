@@ -1,0 +1,51 @@
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "fullName": "Carlos Alcaraz",
+  "email": "carlos@example.com",
+  "birthdate": "1992-06-01"
+}
+
+
+GET http://localhost:3000/users
+Content-Type: application/json
+
+
+POST http://localhost:3000/transactions
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "type": "DEPOSIT",
+  "amount": 300
+}
+
+
+POST http://localhost:3000/transactions
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "type": "WITHDRAW",
+  "amount": 1000
+}
+
+POST http://localhost:3000/order
+Content-Type: application/json
+
+{
+  "userId": 2,
+  "stockId": 2,
+  "type": "BUY",
+  "amount": 800
+}
+
+
+POST http://localhost:3000/stock
+Content-Type: application/json
+
+{
+  "ticker": "TSLA",
+  "name": "Tesla"
+}
