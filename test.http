@@ -42,7 +42,7 @@ Content-Type: application/json
 
 {
   "userId": 1,
-  "name": "Nuevo portfolio"
+  "name": "Nuevo portfolio 2"
 }
 
 
@@ -51,10 +51,10 @@ POST http://localhost:3000/order
 Content-Type: application/json
 
 {
-  "portfolioId": 5,
+  "portfolioId": 6,
   "stockId": 1,
   "type": "BUY",
-  "amount": 1200
+  "amount": 50
 }
 
 # VENDER
@@ -62,8 +62,8 @@ POST http://localhost:3000/order
 Content-Type: application/json
 
 {
-  "portfolioId": 5,
-  "stockId": 2,
+  "portfolioId": 6,
+  "stockId": 1,
   "type": "SELL",
   "amount": 50
 }
@@ -84,3 +84,19 @@ Content-Type: application/json
 {
   "fullName": "Carlitos Alcaraz"
 }
+
+# EDITAR PORTAFOLIO
+PATCH http://localhost:3000/portfolio/5
+Content-Type: application/json
+
+{
+  "name": "Portafolio moderado"
+}
+
+# RESUMEN PORTAFOLIO
+GET http://localhost:3000/portfolio/5/summary
+Content-Type: application/json
+
+# ULTIMAS ORDENES
+GET http://localhost:3000/order/1/orders?limit=5
+Content-Type: application/json

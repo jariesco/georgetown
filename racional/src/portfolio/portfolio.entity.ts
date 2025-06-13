@@ -15,7 +15,7 @@ export class Portfolio {
   user: User;
 
   @OneToMany(() => PortfolioEntry, (entry) => entry.portfolio)
-  entry: PortfolioEntry;
+  entry: PortfolioEntry[];
 
   @OneToMany(() => Order, (order) => order.portfolio)
   orders: Order[];

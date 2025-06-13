@@ -19,4 +19,10 @@ export class PortfolioController {
   ) {
     return this.portfolioService.update(id, updatePortfolioDto);
   }
+
+  @Get(':portfolioId/summary')
+  async getPortfolioSummary(@Param('portfolioId', ParseIntPipe) portfolioId: number) {
+    return this.portfolioService.getSummary(portfolioId);
+  }
+
 }

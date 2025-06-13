@@ -94,4 +94,25 @@ export class OrderService {
     await this.userRepository.save(user);
     return this.orderRepository.save(order);
   }
+
+  async getOrders(userId: number, limit = 5): Promise<Order[]> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['portfolio', 'portfolio.orders'],
+    });
+
+    // Last n (limit) orders across all portfolios of the user
+    if (!user || !user.portfolio) {
+      throw new NotFoundException('User or portfolio not found');
+    }
+    const orders = await this.orderRepository.find({
+      where: { portfolio: { user: { id: userId } } },
+      order: { createdAt: 'DESC' },
+      take: limit,
+      relations: ['portfolio', 'stock'],
+    });
+
+    return orders;
+    
+  }
 }

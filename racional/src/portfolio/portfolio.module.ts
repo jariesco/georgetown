@@ -6,9 +6,10 @@ import { PortfolioService } from './portfolio.service';
 import { PortfolioController } from './portfolio.controller';
 import { User } from '../user/user.entity';
 import { UserModule } from '../user/user.module';
+import { StockModule } from '../stock/stock.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([PortfolioEntry, Portfolio, User]), UserModule],
+  imports: [TypeOrmModule.forFeature([PortfolioEntry, Portfolio, User]), UserModule, StockModule],
   providers: [PortfolioService],
   controllers: [PortfolioController]
 })
