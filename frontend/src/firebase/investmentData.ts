@@ -9,7 +9,7 @@ export function listenToInvestmentData(userId: string, callback: (data: any) => 
   return onSnapshot(ref, (docSnapshot) => {
     if (docSnapshot.exists()) {
       const data = docSnapshot.data();
-      console.log("Firestore data:", data);
+      // console.log("Firestore data:", data);
       callback(data);
     } else {
       console.warn(`No investment data found for user ID: ${userId}`);

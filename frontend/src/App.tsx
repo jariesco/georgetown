@@ -1,11 +1,13 @@
 // src/App.tsx
 import React from 'react';
-import InvestmentChart from './components/InvestmentChart';
+// import InvestmentChart from './components/InvestmentChart';
+import SimpleChart from './components/SimpleChart3';
+// import SimpleChart from './components/Sample';
 
 const App: React.FC = () => (
   <div style={{ padding: '2rem', maxWidth: '900px', margin: '0 auto' }}>
     <h1>Inversión en Tiempo Real</h1>
-    <InvestmentChart />
+    <SimpleChart />
   </div>
 );
 
