@@ -64,6 +64,47 @@ curl http://localhost:3000
 
 O probando los endpoints (ver sección "Ejemplos de requests").
 
+# 🧩 Modelo de Datos
+
+La estructura de la base de datos sigue un modelo relacional con las siguientes entidades y relaciones:
+
+#### 📄 Relaciones principales
+
+- User
+
+  - Tiene una relación uno a muchos con Transaction.
+
+  - Tiene una relación uno a muchos con Portfolio.
+
+- Portfolio
+
+  - Tiene una relación uno a muchos con PortfolioEntry (cada entrada representa una inversión individual en un Stock).
+
+  - Tiene una relación uno a muchos con Order (órdenes de compra o venta asociadas a ese portafolio).
+
+- Stock
+
+  - Tiene una relación uno a muchos con PortfolioEntry (puede haber muchas entradas para un mismo stock en distintos portafolios o momentos).
+
+  - Tiene una relación uno a muchos con Order (una acción puede ser parte de muchas órdenes).
+
+```pgsql
+User
+ ├── Portfolio
+ │    ├── PortfolioEntry → Stock
+ │    └── Order         → Stock
+ └── Transaction
+ ```
+
+**Se puso foco en crear multiples portafolios por usuario, basado en la experiencia propia en que ha surgido el interés de tener portafolios customizados para evaluarlos y compararlos, y para gestionar mejor la distribucion del riesgo.**
+
+
+# 📌 Consideraciones
+
+- Actualmente, los endpoints para crear órdenes o editar portafolios están estructurados principalmente en torno al portfolioId.
+
+- Sin embargo, una mejora importante a considerar sería vincular también estas operaciones explícitamente al userId (del usuario autenticado en una app productiva).
+
 # 🧪 Ejemplos de requests 
 
 *Están también en georgetown/test.http y se pueden probar con extension de vscode para http, postman, curl o codigo para requests http*
