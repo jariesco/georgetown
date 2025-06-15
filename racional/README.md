@@ -1,21 +1,17 @@
 # Racional API
 
-Este proyecto es una API de inversión construida con NestJS y PostgreSQL. Permite crear usuarios, registrar compras de acciones, consultar movimientos y más.
+Este proyecto es una API de inversión construida con NestJS y PostgreSQL. Permite crear usuarios, registrar ordenes de compra/venta, editar informacion, consultar movimientos y más.
 
 ## 🚀 Requisitos
 
-- Node.js (vXX o superior)
-- npm
+- Node.js (v22 o superior)
+- npm (v10 o superior)
 - Docker (para la base de datos)
 
 ## 🔧 Instalación
 
-1. **Clona el repositorio**:
+1. **Clona el repositorio**
 
-```bash
-git clone https://github.com/tu-usuario/racional.git
-cd racional
-```
 
 2. Instala dependencias:
 
@@ -68,6 +64,118 @@ curl http://localhost:3000
 
 O probando los endpoints (ver sección "Ejemplos de requests").
 
-# 🧪 Ejemplos de requests
+# 🧪 Ejemplos de requests 
 
-(Aquí puedes pegar los curl o ejemplos que tienes guardados, luego los pulimos juntos)
+*Están también en georgetown/test.http y se pueden probar con extension de vscode para http, postman o codigo para requests http*
+
+**Recomendado probar en el mismo orden en que están**
+
+### CREAR USUARIO
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "fullName": "Carlos Alcaraz",
+  "email": "carlos@example.com",
+  "birthdate": "1992-06-01"
+}
+
+
+### MOSTRAR USUARIOS
+GET http://localhost:3000/users
+Content-Type: application/json
+
+
+### DEPOSITAR
+POST http://localhost:3000/transactions
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "type": "DEPOSIT",
+  "amount": 3500
+}
+
+
+### RETIRAR
+POST http://localhost:3000/transactions
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "type": "WITHDRAW",
+  "amount": 500
+}
+
+### CREAR STOCK 1
+POST http://localhost:3000/stock
+Content-Type: application/json
+
+{
+  "ticker": "AAPL",
+  "name": "Apple"
+}
+
+### CREAR STOCK 2
+POST http://localhost:3000/stock
+Content-Type: application/json
+
+{
+  "ticker": "TSLA",
+  "name": "Tesla"
+}
+
+### CREAR PORTAFOLIO
+POST http://localhost:3000/portfolio
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "name": "Acciones regalonas"
+}
+
+### COMPRAR
+POST http://localhost:3000/order
+Content-Type: application/json
+
+{
+  "portfolioId": 1,
+  "stockId": 1,
+  "type": "BUY",
+  "amount": 1000
+}
+
+### VENDER
+POST http://localhost:3000/order
+Content-Type: application/json
+
+{
+  "portfolioId": 1,
+  "stockId": 1,
+  "type": "SELL",
+  "amount": 400
+}
+
+### EDITAR USUARIO
+PATCH http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+  "fullName": "Carlitos Alcaraz"
+}
+
+### EDITAR PORTAFOLIO
+PATCH http://localhost:3000/portfolio/1
+Content-Type: application/json
+
+{
+  "name": "Portafolio regalon"
+}
+
+### RESUMEN PORTAFOLIO
+GET http://localhost:3000/portfolio/1/summary
+Content-Type: application/json
+
+### ULTIMAS ORDENES DE USUARIO
+GET http://localhost:3000/order/1/orders?limit=5
+Content-Type: application/json

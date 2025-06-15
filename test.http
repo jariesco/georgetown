@@ -1,5 +1,4 @@
-
-# CREAR USUARIO
+### CREAR USUARIO
 POST http://localhost:3000/users
 Content-Type: application/json
 
@@ -10,12 +9,12 @@ Content-Type: application/json
 }
 
 
-# MOSTRAR USUARIOS
+### MOSTRAR USUARIOS
 GET http://localhost:3000/users
 Content-Type: application/json
 
 
-# DEPOSITAR
+### DEPOSITAR
 POST http://localhost:3000/transactions
 Content-Type: application/json
 
@@ -26,49 +25,17 @@ Content-Type: application/json
 }
 
 
-# RETIRAR
+### RETIRAR
 POST http://localhost:3000/transactions
 Content-Type: application/json
 
 {
   "userId": 1,
   "type": "WITHDRAW",
-  "amount": 50
+  "amount": 500
 }
 
-# CREAR PORTAFOLIO
-POST http://localhost:3000/portfolio
-Content-Type: application/json
-
-{
-  "userId": 1,
-  "name": "Nuevo portfolio 2"
-}
-
-
-# COMPRAR
-POST http://localhost:3000/order
-Content-Type: application/json
-
-{
-  "portfolioId": 6,
-  "stockId": 1,
-  "type": "BUY",
-  "amount": 50
-}
-
-# VENDER
-POST http://localhost:3000/order
-Content-Type: application/json
-
-{
-  "portfolioId": 6,
-  "stockId": 1,
-  "type": "SELL",
-  "amount": 50
-}
-
-# CREAR STOCK
+### CREAR STOCK 1
 POST http://localhost:3000/stock
 Content-Type: application/json
 
@@ -77,7 +44,47 @@ Content-Type: application/json
   "name": "Apple"
 }
 
-# EDITAR USUARIO
+### CREAR STOCK 2
+POST http://localhost:3000/stock
+Content-Type: application/json
+
+{
+  "ticker": "TSLA",
+  "name": "Tesla"
+}
+
+### CREAR PORTAFOLIO
+POST http://localhost:3000/portfolio
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "name": "Acciones regalonas"
+}
+
+### COMPRAR
+POST http://localhost:3000/order
+Content-Type: application/json
+
+{
+  "portfolioId": 1,
+  "stockId": 1,
+  "type": "BUY",
+  "amount": 1000
+}
+
+### VENDER
+POST http://localhost:3000/order
+Content-Type: application/json
+
+{
+  "portfolioId": 1,
+  "stockId": 1,
+  "type": "SELL",
+  "amount": 400
+}
+
+### EDITAR USUARIO
 PATCH http://localhost:3000/users/1
 Content-Type: application/json
 
@@ -85,18 +92,18 @@ Content-Type: application/json
   "fullName": "Carlitos Alcaraz"
 }
 
-# EDITAR PORTAFOLIO
-PATCH http://localhost:3000/portfolio/5
+### EDITAR PORTAFOLIO
+PATCH http://localhost:3000/portfolio/1
 Content-Type: application/json
 
 {
-  "name": "Portafolio moderado"
+  "name": "Portafolio regalon"
 }
 
-# RESUMEN PORTAFOLIO
-GET http://localhost:3000/portfolio/5/summary
+### RESUMEN PORTAFOLIO
+GET http://localhost:3000/portfolio/1/summary
 Content-Type: application/json
 
-# ULTIMAS ORDENES
+### ULTIMAS ORDENES DE USUARIO
 GET http://localhost:3000/order/1/orders?limit=5
 Content-Type: application/json
