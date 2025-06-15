@@ -1,4 +1,4 @@
-# Racional API
+# API de inversión
 
 Este proyecto es una API de inversión construida con NestJS y PostgreSQL. Permite crear usuarios, registrar ordenes de compra/venta, editar informacion, consultar movimientos y más.
 
@@ -72,21 +72,21 @@ La estructura de la base de datos sigue un modelo relacional con las siguientes 
 
 - User
 
-  - Tiene una relación uno a muchos con Transaction.
+  - Tiene una relación **uno a muchos** con Transaction.
 
-  - Tiene una relación uno a muchos con Portfolio.
+  - Tiene una relación **uno a muchos** con Portfolio.
 
 - Portfolio
 
-  - Tiene una relación uno a muchos con PortfolioEntry (cada entrada representa una inversión individual en un Stock).
+  - Tiene una relación **uno a muchos** con PortfolioEntry (cada entrada representa una inversión individual en un Stock).
 
-  - Tiene una relación uno a muchos con Order (órdenes de compra o venta asociadas a ese portafolio).
+  - Tiene una relación **uno a muchos** con Order (órdenes de compra o venta asociadas a ese portafolio).
 
 - Stock
 
-  - Tiene una relación uno a muchos con PortfolioEntry (puede haber muchas entradas para un mismo stock en distintos portafolios o momentos).
+  - Tiene una relación **uno a muchos** con PortfolioEntry (puede haber muchas entradas para un mismo stock en distintos portafolios o momentos).
 
-  - Tiene una relación uno a muchos con Order (una acción puede ser parte de muchas órdenes).
+  - Tiene una relación **uno a muchos** con Order (una acción puede ser parte de muchas órdenes).
 
 ```pgsql
 User
@@ -103,7 +103,7 @@ User
 
 - Actualmente, los endpoints para crear órdenes o editar portafolios están estructurados principalmente en torno al portfolioId.
 
-- Sin embargo, una mejora importante a considerar sería vincular también estas operaciones explícitamente al userId (del usuario autenticado en una app productiva).
+- Sin embargo, una mejora importante a considerar, por seguridad, sería vincular también estas operaciones explícitamente al userId (está vinculado pero sólo desde el código).
 
 # 🧪 Ejemplos de requests 
 
@@ -111,7 +111,7 @@ User
 
 **Recomendado probar en el mismo orden en que están**
 
-### CREAR USUARIO
+#### CREAR USUARIO
 
 ```http
 POST http://localhost:3000/users
@@ -124,7 +124,7 @@ Content-Type: application/json
 }
 ```
 
-### MOSTRAR USUARIOS
+#### MOSTRAR USUARIOS
 
 ```http
 GET http://localhost:3000/users
@@ -132,7 +132,7 @@ Content-Type: application/json
 ```
 
 
-### DEPOSITAR
+#### DEPOSITAR
 
 ```http
 POST http://localhost:3000/transactions
@@ -145,7 +145,7 @@ Content-Type: application/json
 }
 ```
 
-### RETIRAR
+#### RETIRAR
 
 ```http
 POST http://localhost:3000/transactions
@@ -158,7 +158,7 @@ Content-Type: application/json
 }
 ```
 
-### CREAR STOCK 1
+#### CREAR STOCK 1
 
 ```http
 POST http://localhost:3000/stock
@@ -170,7 +170,7 @@ Content-Type: application/json
 }
 ```
 
-### CREAR STOCK 2
+#### CREAR STOCK 2
 
 ```http
 POST http://localhost:3000/stock
@@ -182,7 +182,7 @@ Content-Type: application/json
 }
 ```
 
-### CREAR PORTAFOLIO
+#### CREAR PORTAFOLIO
 
 ```http
 POST http://localhost:3000/portfolio
@@ -194,7 +194,7 @@ Content-Type: application/json
 }
 ```
 
-### COMPRAR
+#### COMPRAR
 
 ```http
 POST http://localhost:3000/order
@@ -208,7 +208,7 @@ Content-Type: application/json
 }
 ```
 
-### VENDER
+#### VENDER
 
 ```http
 POST http://localhost:3000/order
@@ -222,7 +222,7 @@ Content-Type: application/json
 }
 ```
 
-### EDITAR USUARIO
+#### EDITAR USUARIO
 
 ```http
 PATCH http://localhost:3000/users/1
@@ -233,7 +233,7 @@ Content-Type: application/json
 }
 ```
 
-### EDITAR PORTAFOLIO
+#### EDITAR PORTAFOLIO
 
 ```http
 PATCH http://localhost:3000/portfolio/1
@@ -244,14 +244,14 @@ Content-Type: application/json
 }
 ```
 
-### RESUMEN PORTAFOLIO
+#### RESUMEN PORTAFOLIO
 
 ```http
 GET http://localhost:3000/portfolio/1/summary
 Content-Type: application/json
 ```
 
-### ULTIMAS ORDENES DE USUARIO
+#### ULTIMAS ORDENES DE USUARIO
 
 ```http
 GET http://localhost:3000/order/1/orders?limit=5
