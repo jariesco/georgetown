@@ -66,7 +66,7 @@ O probando los endpoints (ver sección "Ejemplos de requests").
 
 # 🧪 Ejemplos de requests 
 
-*Están también en georgetown/test.http y se pueden probar con extension de vscode para http, postman o codigo para requests http*
+*Están también en georgetown/test.http y se pueden probar con extension de vscode para http, postman, curl o codigo para requests http*
 
 **Recomendado probar en el mismo orden en que están**
 
