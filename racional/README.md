@@ -71,6 +71,8 @@ O probando los endpoints (ver sección "Ejemplos de requests").
 **Recomendado probar en el mismo orden en que están**
 
 ### CREAR USUARIO
+
+```http
 POST http://localhost:3000/users
 Content-Type: application/json
 
@@ -79,7 +81,7 @@ Content-Type: application/json
   "email": "carlos@example.com",
   "birthdate": "1992-06-01"
 }
-
+```
 
 ### MOSTRAR USUARIOS
 GET http://localhost:3000/users
