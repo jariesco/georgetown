@@ -1,4 +1,4 @@
-# Georgetown - Racional
+# Georgetown - Desafio Software Racional
 
 
 # 📁 Estructura del repositorio
