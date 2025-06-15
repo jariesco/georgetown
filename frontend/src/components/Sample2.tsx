@@ -16,7 +16,7 @@ ChartJS.register(LineElement, PointElement, LinearScale, CategoryScale, Tooltip,
 const labels = ['01/01', '01/02', '01/03', '01/04', '01/05', '01/06'];
 const values = [1, 2, 1.5, 2.5, 3.2, 3.8];
 
-const SimpleRangeChart = () => {
+const SimpleChart = () => {
   const chartRef = useRef<any>(null);
   const [range, setRange] = useState<any>(null);
   const [dragging, setDragging] = useState(false);
@@ -131,4 +131,4 @@ const SimpleRangeChart = () => {
   );
 };
 
-export default SimpleRangeChart;
+export default SimpleChart;

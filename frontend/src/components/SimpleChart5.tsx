@@ -5,16 +5,13 @@ import {
   LinearScale,
   CategoryScale,
   Tooltip,
-  Legend,
-  ChartOptions
+  Legend
 } from 'chart.js';
 import type { ChartJSOrUndefined } from 'react-chartjs-2/dist/types';
 import React, { useEffect, useState, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { listenToInvestmentData } from '../firebase/investmentData';
-import { TooltipItem } from 'chart.js';
 import zoomPlugin from 'chartjs-plugin-zoom';
-import { callback } from 'chart.js/dist/helpers/helpers.core';
 
 const verticalLinePlugin = {
   id: 'verticalLinePlugin',
@@ -30,15 +27,14 @@ const verticalLinePlugin = {
       ctx.moveTo(x, topY);
       ctx.lineTo(x, bottomY);
       ctx.lineWidth = 1;
-      ctx.strokeStyle = '#999'; // color de la línea vertical
-      ctx.setLineDash([2, 3]);  // línea punteada opcional
+      ctx.strokeStyle = '#999';
+      ctx.setLineDash([2, 3]);
       ctx.stroke();
       ctx.restore();
     }
   }
 };
 
-// REGISTRAR componentes
 ChartJS.register(
   LineElement,
   PointElement,
@@ -64,7 +60,6 @@ const SimpleChart: React.FC = () => {
   const chartRef = useRef<ChartJSOrUndefined<'line'>>(null);
   const [selectedPoints, setSelectedPoints] = useState<number[]>([]);
   const [comparison, setComparison] = useState<any>(null);
-  const [updateFlag, setUpdateFlag] = useState(false);
 
   const handleClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const chart = chartRef.current;
@@ -92,9 +87,6 @@ const SimpleChart: React.FC = () => {
     }
   };
 
-  // chartData.datasets[0].data
-
-
   useEffect(() => {
     const unsubscribe = listenToInvestmentData('user1', (data) => {
         const historyArray = data?.array;
@@ -109,11 +101,9 @@ const SimpleChart: React.FC = () => {
                 const date = new Date(entry.date.seconds * 1000); 
                 // Formato de fecha: YYYY/MM/DD
                 return date.toISOString().split('T')[0]; // YYYY-MM-DD
-                // return date.toLocaleDateString();
-                // return date.toLocaleString('es-ES', { month: 'short', year: 'numeric' });
             });
 
-            const values = downsampled.map((entry: InvestmentEntry) => Number(entry.portfolioValue / 1000000));
+            const values = downsampled.map((entry: InvestmentEntry) => Number(entry.portfolioValue));
 
             setChartData({
                 labels,
@@ -138,16 +128,26 @@ const SimpleChart: React.FC = () => {
     return () => unsubscribe();
     }, []);
 
-  if (!chartData) return <p>Loading chart...</p>;
+    const getPositionForValue = (index: number, offsetX = 0, offsetY = -20) => {
+        const chart = chartRef.current;
+        if (!chart) return { left: '0px', top: '0px' };
+        const meta = chart.getDatasetMeta(0);
+        const point = meta.data[index];
+        const rect = chart.canvas.getBoundingClientRect();
+        return {
+        left: `${point.x + rect.left - chart.canvas.offsetLeft + offsetX}px`,
+        top: `${point.y + rect.top - chart.canvas.offsetTop + offsetY}px` // posición sobre el punto
+        };
+    };
+
+
+  if (!chartData) return <p>Loading...</p>;
 
   return (
     <div style={{ position: 'relative' }}>
   <Line 
-  
-  
-  
-  ref={chartRef} 
 
+  ref={chartRef} 
 
   data={{
     ...chartData,
@@ -220,12 +220,12 @@ const SimpleChart: React.FC = () => {
                 xAlign: 'center',
                 padding: 10,
 
-                // 👇 Personaliza sombra
+                // Personaliza sombra
                 boxPadding: 12, // separa el contenido de los bordes del tooltip
                 boxHeight: 2,
                 boxWidth: 2,
 
-                // 👇 Más separación respecto al punto (offset)
+                // Más separación respecto al punto (offset)
                 caretPadding: 24, // separa el tooltip del puntero
                 caretSize: 0,     // tamaño del triángulo que apunta    // color del valor
                 titleFont: {
@@ -245,7 +245,7 @@ const SimpleChart: React.FC = () => {
                     },
                     label: function (ctx) {
                         // segunda línea: el valor con formato
-                        return `$ ${(Number(ctx.raw)   ).toFixed(1)}M`;
+                        return `$ ${(Number(ctx.raw)).toLocaleString('es-CL')}M`;
                     }
                 }
             }
@@ -259,7 +259,7 @@ const SimpleChart: React.FC = () => {
                     display: false, // Oculta la línea del eje X
                 },
                 grid: {
-                    color: 'rgba(232, 20, 34, 0.1)',
+                    color: 'rgba(58, 24, 159, 0.37)',
                     display: false,
                     // drawBorder: false,
                     drawOnChartArea: false,
@@ -268,16 +268,16 @@ const SimpleChart: React.FC = () => {
                 ticks: {
                     maxTicksLimit: 3,
                     callback: function (value) {
-                        return `${Number(value).toFixed(1)}M`; // ✅ máximo 1 decimal
+                        return `${(Number(value)/1000000).toFixed(1)}M`; // ✅ máximo 1 decimal
                     },
                     padding: 12,
                     align: 'inner',
-                    color: '#444', // opcional
+                    color: '#444',
                     
                 },
-                position: 'right', // opcional si quieres moverlo
+                position: 'right', 
                 alignToPixels: true,
-                offset: true // en x y en y, si lo tienes activado
+                offset: true 
                 // align: 'start', // o 'end' para cambiar la alineación del texto
             },
             x: {
@@ -287,10 +287,10 @@ const SimpleChart: React.FC = () => {
                     display: false, // Oculta la línea del eje X
                 },
                 grid: {
-                    color: 'rgba(215, 17, 17, 0.1)', 
+                    color: 'rgba(58, 24, 159, 0.37)', 
                     display: false, 
                     // drawBorder: false,
-                    drawOnChartArea: false,
+                    drawOnChartArea: true,
                     drawTicks: false,
                     
                 },
@@ -313,7 +313,6 @@ const SimpleChart: React.FC = () => {
                                 const date = new Date(label);
                                 // return String(month-1) + " " + String(year); // Formato "MM YYYY"
                                 return date.toLocaleString('es-ES', { month: 'short', year: 'numeric' });
-
                                 // return label;
                             }
                         }
@@ -324,35 +323,33 @@ const SimpleChart: React.FC = () => {
         }
     }
   }  />
-  {comparison && (
+      {comparison && (
         <>
-          <div style={{
-            position: 'absolute',
-            left: `${(comparison.i1 / (chartData.labels.length - 1)) * 100}%`,
-            top: '10%',
-            transform: 'translateX(-50%)',
-            backgroundColor: '#fff',
-            border: '1px solid #ccc',
-            padding: '4px 8px',
-            fontSize: '12px',
-            borderRadius: '4px'
-          }}>
-            {comparison.v1}
-          </div>
-          <div style={{
-            position: 'absolute',
-            left: `${(comparison.i2 / (chartData.labels.length - 1)) * 100}%`,
-            top: '10%',
-            transform: 'translateX(-50%)',
-            backgroundColor: '#fff',
-            border: '1px solid #ccc',
-            padding: '4px 8px',
-            fontSize: '12px',
-            borderRadius: '4px'
-          }}>
-            <div>{comparison.v2}</div>
-            <div>{comparison.percentage}%</div>
-          </div>
+          {[comparison.i1, comparison.i2].map((index, i) => {
+            const value = i === 0 ? comparison.v1 : comparison.v2;
+            const offsetX = i === 0 ? -165 : -160;
+            const offsetY = -140;
+            const position = getPositionForValue(index, offsetX, offsetY);
+            const showPercentage = i === 1;
+            return (
+              <div
+                key={index}
+                style={{
+                  position: 'absolute',
+                  left: position.left,
+                  top: position.top,
+                  transform: 'translate(-50%, -100%)',
+                  fontSize: '12px',
+                  color: 'black'
+                }}
+              >
+                ${value.toLocaleString('es-CL')}
+                {showPercentage && (
+                  <div>{comparison.percentage}%</div>
+                )}
+              </div>
+            );
+          })}
         </>
       )}
   </div>);
