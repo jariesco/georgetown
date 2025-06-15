@@ -60,17 +60,17 @@ Este gráfico fue diseñado con un enfoque en la simplicidad, claridad visual y 
 
     - La información del punto activo (hover) se muestra en un pequeño cuadro ubicado en una posición relativa al punto. Esto genera una sensación visual de estar navegando a través del tiempo y observando la evolución del valor de manera contextual e intuitiva.
 
-- Interacción UX intuitiva:
+- Interacción UX intuitiva (**Comparador**):
 
     - Al hacer clic en dos puntos del gráfico, se resaltan con círculos rojos.
 
-    - Se muestra el valor exacto de cada punto (con separador de miles y sin redondear), junto con la variación porcentual entre ambos.
+    - Se muestra el valor exacto de cada punto (con separador de miles y sin redondear), junto con la variación porcentual entre ambos: **Este feature fue pensado desde la experiencia personal, por querer evaluar dinamicamente y de forma sencilla cómo rindió mi portafolio entre ciertas fechas.**
 
     - La posición de los valores está ajustada de forma relativa al punto del gráfico, mejorando la legibilidad contextual.
 
 # 🛠 Funciones secundarias
 
-- Zoom horizontal mediante scroll o gesto de pellizcar.
+- Zoom horizontal mediante scroll.
 
 - Arrastre (pan) tanto en eje X como Y para explorar diferentes secciones del gráfico.
 
@@ -80,7 +80,7 @@ Este gráfico fue diseñado con un enfoque en la simplicidad, claridad visual y 
 
 - Habilitar zoom vertical, además del horizontal ya disponible.
 
-- Permitir comparar el rendimiento contra un índice de referencia (por ejemplo, el S&P 500).
+- **Upgrade de comparador:** Permitir comparar el rendimiento (de fechas seleccionadas) contra un índice de referencia (por ejemplo, el S&P 500).
 
 - Implementar selección por arrastrado horizontal, donde el usuario pueda elegir un rango dinámicamente y ver la variación en tiempo real.
 
