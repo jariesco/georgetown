@@ -84,11 +84,16 @@ Content-Type: application/json
 ```
 
 ### MOSTRAR USUARIOS
+
+```http
 GET http://localhost:3000/users
 Content-Type: application/json
+```
 
 
 ### DEPOSITAR
+
+```http
 POST http://localhost:3000/transactions
 Content-Type: application/json
 
@@ -97,9 +102,11 @@ Content-Type: application/json
   "type": "DEPOSIT",
   "amount": 3500
 }
-
+```
 
 ### RETIRAR
+
+```http
 POST http://localhost:3000/transactions
 Content-Type: application/json
 
@@ -108,8 +115,11 @@ Content-Type: application/json
   "type": "WITHDRAW",
   "amount": 500
 }
+```
 
 ### CREAR STOCK 1
+
+```htpp
 POST http://localhost:3000/stock
 Content-Type: application/json
 
@@ -117,8 +127,11 @@ Content-Type: application/json
   "ticker": "AAPL",
   "name": "Apple"
 }
+```
 
 ### CREAR STOCK 2
+
+```http
 POST http://localhost:3000/stock
 Content-Type: application/json
 
@@ -126,8 +139,11 @@ Content-Type: application/json
   "ticker": "TSLA",
   "name": "Tesla"
 }
+```
 
 ### CREAR PORTAFOLIO
+
+```http
 POST http://localhost:3000/portfolio
 Content-Type: application/json
 
@@ -135,8 +151,11 @@ Content-Type: application/json
   "userId": 1,
   "name": "Acciones regalonas"
 }
+```
 
 ### COMPRAR
+
+```http
 POST http://localhost:3000/order
 Content-Type: application/json
 
@@ -146,8 +165,11 @@ Content-Type: application/json
   "type": "BUY",
   "amount": 1000
 }
+```
 
 ### VENDER
+
+```http
 POST http://localhost:3000/order
 Content-Type: application/json
 
@@ -157,27 +179,40 @@ Content-Type: application/json
   "type": "SELL",
   "amount": 400
 }
+```
 
 ### EDITAR USUARIO
+
+```http
 PATCH http://localhost:3000/users/1
 Content-Type: application/json
 
 {
   "fullName": "Carlitos Alcaraz"
 }
+```
 
 ### EDITAR PORTAFOLIO
+
+```http
 PATCH http://localhost:3000/portfolio/1
 Content-Type: application/json
 
 {
   "name": "Portafolio regalon"
 }
+```
 
 ### RESUMEN PORTAFOLIO
+
+```http
 GET http://localhost:3000/portfolio/1/summary
 Content-Type: application/json
+```
 
 ### ULTIMAS ORDENES DE USUARIO
+
+```http
 GET http://localhost:3000/order/1/orders?limit=5
 Content-Type: application/json
+```
