@@ -119,7 +119,7 @@ Content-Type: application/json
 
 ### CREAR STOCK 1
 
-```htpp
+```http
 POST http://localhost:3000/stock
 Content-Type: application/json
 
