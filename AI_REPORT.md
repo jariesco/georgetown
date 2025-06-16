@@ -1,4 +1,4 @@
-# 🧠 I.A. Reporte de metodología de uso de IA
+# 🧠 Reporte de metodología de uso de IA
 
 Durante el desarrollo de este proyecto, integré herramientas de Inteligencia Artificial para mejorar la velocidad, claridad y calidad del proceso. A continuación, detallo cómo y con qué propósito las utilicé:
 
@@ -14,7 +14,7 @@ Utilicé ChatGPT de forma activa como asistente técnico y estratégico. Me apoy
 
 - 📚 Aprendizaje continuo: a medida que se desarrolla van surgiendo dudas sobre el verdadero funcionamiento de ciertas lógicas, y aprovecho de consultar a la IA para entender mejor lo que ocurre por detrás, y así poder usarlo a mi favor en el futuro.
 
-# 2. GitHub Copilot (Visual Studio Code)
+## 2. GitHub Copilot (Visual Studio Code)
 
 Utilicé GitHub Copilot para:
 
