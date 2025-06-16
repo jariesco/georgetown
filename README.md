@@ -1,4 +1,4 @@
-# Georgetown - Desafio Software Racional
+# Racional - Prueba - Jorge Riesco
 
 
 # 📁 Estructura del repositorio
