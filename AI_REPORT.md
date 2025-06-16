@@ -23,3 +23,6 @@ Utilicé GitHub Copilot para:
 - Sugerir lineas de código potencialmente útiles (code generation).
 
 - Resolver dudas puntuales del lenguaje o framework.
+
+
+El uso de estas herramientas no reemplazó mi comprensión ni mi juicio técnico porque con ellas busco acceder rápidamente a soluciones propuestas, consultar cómo y por qué funcionan, entender los conceptos que aplican y preguntar alternativas posibles y sus trade-offs. Acceder al conocimeinto de manera más directa me permite entender más agilmente las herramientas que estoy usando y lograr un mayor dominio.
