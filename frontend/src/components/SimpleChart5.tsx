@@ -60,6 +60,10 @@ const SimpleChart: React.FC = () => {
   const chartRef = useRef<ChartJSOrUndefined<'line'>>(null);
   const [selectedPoints, setSelectedPoints] = useState<number[]>([]);
   const [comparison, setComparison] = useState<any>(null);
+  const [lastElement, setLastElement] = useState<InvestmentEntry | null>(null);
+
+
+  
 
   const handleClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
     const chart = chartRef.current;
@@ -90,6 +94,11 @@ const SimpleChart: React.FC = () => {
   useEffect(() => {
     const unsubscribe = listenToInvestmentData('user1', (data) => {
         const historyArray = data?.array;
+        // ultimo elemento del array
+        const currentLastElement = historyArray[historyArray.length - 1];
+        // console.log("lastElement:", historyArray);
+
+        setLastElement(currentLastElement);
     
         
         if (Array.isArray(historyArray)) {
@@ -155,6 +164,9 @@ const SimpleChart: React.FC = () => {
       ...dataset,
       pointRadius: (ctx: any) => {
           const index = ctx.dataIndex;
+          if (index === dataset.data.length-1) {
+            return 6; // evita errores de índice
+          }
           if (comparison && (index === comparison.i1 || index === comparison.i2)) {
             return 5; // tamaño del punto cuando está seleccionado
           }
@@ -163,6 +175,9 @@ const SimpleChart: React.FC = () => {
       , // los puntos no se ven normalmente
       backgroundColor: (ctx: any) => {
           const index = ctx.dataIndex;
+          if (index === dataset.data.length-1) {
+            return 'Yellow'; // evita errores de índice
+          }
           if (comparison && (index === comparison.i1 || index === comparison.i2)) {
             return 'red'; // tamaño del punto cuando está seleccionado
           }
@@ -352,7 +367,19 @@ const SimpleChart: React.FC = () => {
           })}
         </>
       )}
-  </div>);
+      {lastElement && (
+  <div style={{ marginTop: '12px', textAlign: 'center', fontSize: '16px', fontWeight: 'bold' }}>
+    Último valor de stock: ${lastElement.portfolioValue.toLocaleString('es-CL')}
+  </div>
+      )}
+ 
+        
+      
+  </div>
+  
+  
+
+);
 };
 
 export default SimpleChart;
